@@ -21,7 +21,7 @@
 #define kScreenWidth [UIScreen mainScreen].bounds.size.width
 #define kScreenHeight [UIScreen mainScreen].bounds.size.height
 
-@interface ViewController ()<ZLPhotoPickerViewControllerDelegate>
+@interface ViewController ()<ZLPhotoPickerViewControllerDelegate,UIScrollViewDelegate>
 @property (strong, nonatomic) UIView *displayPhotoView;//添加照片的展示视图
 @property (strong, nonatomic) NSMutableArray *photoArr;//添加的照片数组
 @end
@@ -36,10 +36,17 @@
 
     self.photoArr =[NSMutableArray array];
 
+    
+    UIScrollView *scrollVC = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight)];
+    scrollVC.delegate = self;
+    scrollVC.backgroundColor =[UIColor whiteColor];
+    self.automaticallyAdjustsScrollViewInsets = NO;
+    [self.view addSubview:scrollVC];
+    
 
     self.displayPhotoView = [[UIView alloc]initWithFrame:CGRectMake(0,100, kScreenWidth, kScreenWidth/3)];
     self.displayPhotoView.backgroundColor  = [UIColor whiteColor];
-    [self.view addSubview:self.displayPhotoView];
+    [scrollVC addSubview:self.displayPhotoView];
     [self creatAddPhotoView];//添加照片
 }
 
